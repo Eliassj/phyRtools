@@ -3,7 +3,12 @@
 #' @param path Path to phy output
 #' @param triggerfile Name of triggerchannel, has to be in the 'path' dir and in .csv form.
 #'
-#' @return A list
+#' @return A list containing:
+#' * "spiketimes", a dt with spiketimes, their cluster, channel and depth.
+#' * "triggers", a vector of triggertimes
+#' * "info", a dt with info from phy on each cluster
+#'
+#' All spike-/trigger times are represented in their original 30 000Hz form.
 #' @export
 #'
 #' @examples
@@ -15,6 +20,7 @@ loadSpikes <- function(path, triggerfile) {
                                      "time" = np$load(paste0(path, "\\spike_times.npy")))
   spikesdt <- spikesdt[cluster %in% clusterinfo$cluster_id]
   spikesdt <- spikesdt[clusterinfo[, .(cluster_id, ch, depth)], on = .(cluster == cluster_id)]
+  colnames(spikesdt) <- c("cluster", "time", "ch", "depth")
   trigger <- data.table::fread(paste0(path, "\\",triggerfile)) # Read triggerchannel
 
   trig_index <- data.table::data.table("triggers" = trigger[, which(V1 != 0)]) # Extract index of triggers

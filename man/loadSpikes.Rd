@@ -7,12 +7,19 @@
 loadSpikes(path, triggerfile)
 }
 \arguments{
-\item{path}{Path to ohy output}
+\item{path}{Path to phy output}
 
 \item{triggerfile}{Name of triggerchannel, has to be in the 'path' dir and in .csv form.}
 }
 \value{
-A list
+A list containing:
+\itemize{
+\item "spiketimes", a dt with spiketimes, their cluster, channel and depth.
+\item "triggers", a vector of triggertimes
+\item "info", a dt with info from phy on each cluster
+}
+
+All spike-/trigger times are represented in their original 30 000Hz form.
 }
 \description{
 Title
