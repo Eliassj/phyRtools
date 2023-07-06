@@ -1,0 +1,32 @@
+#' Title
+#'
+#' @param path Path to phy output
+#' @param triggerfile Name of triggerchannel, has to be in the 'path' dir and in .csv form.
+#'
+#' @return A list
+#' @export
+#'
+#' @examples
+#' loadSpikes(path = "C:/Users/Elias/Desktop/phyish/Phyr/Våra", triggerfile = "asd.csv")
+loadSpikes <- function(path, triggerfile) {
+  np <- reticulate::import("numpy")
+  clusterinfo <- data.table::fread(paste0(path, "\\cluster_info.tsv"))[group == "good"]
+  spikesdt <- data.table::data.table("cluster" = as.integer(as.vector(np$load(paste0(path, "\\spike_clusters.npy")))),
+                                     "time" = np$load(paste0(path, "\\spike_times.npy")))
+  spikesdt <- spikesdt[cluster %in% clusterinfo$cluster_id]
+  spikesdt <- spikesdt[clusterinfo[, .(cluster_id, ch, depth)], on = .(cluster == cluster_id)]
+  trigger <- data.table::fread(paste0(path, "\\",triggerfile)) # Read triggerchannel
+
+  trig_index <- data.table::data.table("triggers" = trigger[, which(V1 != 0)]) # Extract index of triggers
+
+  trig_index[, triggershift := triggers - data.table::shift(triggers, n = 1)] # Make all sequential values 1
+
+  triggertimes <- trig_index[triggershift != 1, triggers]# Remove all values not = 1
+                                     return(
+                                       list(
+                                         "spiketimes" = spikesdt,
+                                         "triggers" = triggertimes,
+                                         "info" = clusterinfo
+                                       )
+                                     )
+}
