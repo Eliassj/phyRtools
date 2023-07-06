@@ -2,7 +2,7 @@
 % Please edit documentation in R/loadSpikes.R
 \name{loadSpikes}
 \alias{loadSpikes}
-\title{Title}
+\title{Load spikes from Phy output}
 \usage{
 loadSpikes(path, triggerfile)
 }
@@ -22,7 +22,8 @@ A list containing:
 All spike-/trigger times are represented in their original 30 000Hz form.
 }
 \description{
-Title
+loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr
+Associated info includes depth, channel, triggertimes, amplitude, and mean firerate
 }
 \examples{
 loadSpikes(path = "C:/Users/Elias/Desktop/phyish/Phyr/Våra", triggerfile = "asd.csv")

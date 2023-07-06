@@ -19,6 +19,6 @@ ISIonly = TRUE -> A dt with cluster and ISI for each spike.
 Calculate ISI
 }
 \examples{
-dt <- loadSpike(path, triggerfile)
+dt <- loadSpikes(path, triggerfile)
 spikeISI(dt)
 }

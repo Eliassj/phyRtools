@@ -2,3 +2,6 @@
 
 export(loadSpikes)
 export(spikeISI)
+export(spikesper)
+export(triggers)
+import(data.table)

@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' dt <- loadSpike(path, triggerfile)
+#' dt <- loadSpikes(path, triggerfile)
 #' spikeISI(dt)
 spikeISI <- function(x, ISIonly = FALSE) {
   if (ISIonly == FALSE) {

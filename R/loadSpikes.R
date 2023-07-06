@@ -1,4 +1,7 @@
-#' Title
+#' Load spikes from Phy output
+#'
+#' loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr
+#' Associated info includes depth, channel, triggertimes, amplitude, and mean firerate
 #'
 #' @param path Path to phy output
 #' @param triggerfile Name of triggerchannel, has to be in the 'path' dir and in .csv form.
@@ -9,6 +12,8 @@
 #' * "info", a dt with info from phy on each cluster
 #'
 #' All spike-/trigger times are represented in their original 30 000Hz form.
+#' @import data.table
+#'
 #' @export
 #'
 #' @examples
@@ -28,11 +33,13 @@ loadSpikes <- function(path, triggerfile) {
   trig_index[, triggershift := triggers - data.table::shift(triggers, n = 1)] # Make all sequential values 1
 
   triggertimes <- trig_index[triggershift != 1, triggers]# Remove all values not = 1
-                                     return(
-                                       list(
-                                         "spiketimes" = spikesdt,
-                                         "triggers" = triggertimes,
-                                         "info" = clusterinfo
-                                       )
-                                     )
+  triggers <- data.table("t" = triggertimes,
+                         "n" = 1:length(triggertimes))
+  return(
+    list(
+      "spiketimes" = spikesdt,
+      "triggers" = triggers,
+      "info" = clusterinfo
+    )
+  )
 }
