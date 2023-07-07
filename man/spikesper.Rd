@@ -15,7 +15,8 @@ spikesper(x, period)
 A list object with spikes per period as specified by \code{per}.
 }
 \description{
-Create dt with spikes/period
+Summarizes the spiketimes to spikes/period.
+Removes the attribute "\code{ogspiketimes}" and adds the specified \code{period} as an attribute.
 }
 \examples{
 # Get spikes per second

@@ -14,12 +14,12 @@ triggers(x, back = 500, forward = 600)
 \item{forward}{The time in ms to look forwards from trigger. Defaults to 600.}
 }
 \value{
-The same list object but the "spiketimes" dt has an additional column "ntrig"
+A new phyouput object containing info and spikes near triggers.
 }
 \description{
-A function which adds a column to \code{x} marking its nearest trigger as specified with the \code{forward} and \code{back} params.
+A function which creates a new \code{phyoutput} object only containing spikes near a trigger (as specified by \code{back} & \code{forward}).
 }
 \examples{
 dt <- loadSpikes(path, triggerfile)
-triggers(dt)
+newdt <- triggers(dt)
 }

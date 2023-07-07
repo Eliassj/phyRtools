@@ -40,7 +40,7 @@ loadSpikes <- function(path, triggerfile) {
     triggers = triggers,
     info = clusterinfo
   )
-  attr(value, "class") <- "phyoutput"
+  attr(value, "class") <- c("phyoutput", "ogspiketimes")
   return(value
 
   )
