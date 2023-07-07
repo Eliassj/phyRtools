@@ -35,11 +35,13 @@ loadSpikes <- function(path, triggerfile) {
   triggertimes <- trig_index[triggershift != 1, triggers]# Remove all values not = 1
   triggers <- data.table("t" = triggertimes,
                          "n" = 1:length(triggertimes))
-  return(
-    list(
-      "spiketimes" = spikesdt,
-      "triggers" = triggers,
-      "info" = clusterinfo
-    )
+  value <- list(
+    spiketimes = spikesdt,
+    triggers = triggers,
+    info = clusterinfo
+  )
+  attr(value, "class") <- "phyoutput"
+  return(value
+
   )
 }
