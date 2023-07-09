@@ -9,7 +9,7 @@ spikesper(x, period)
 \arguments{
 \item{x}{A list object created by \code{\link{loadSpikes}}.}
 
-\item{period}{The period in seconds by which to summarize.}
+\item{period}{The period in milliseconds by which to summarize.}
 }
 \value{
 A list object with spikes per period as specified by \code{per}.

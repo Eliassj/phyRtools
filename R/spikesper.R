@@ -4,7 +4,7 @@
 #' Removes the attribute "\code{ogspiketimes}" and adds the specified \code{period} as an attribute.
 #'
 #' @param x A list object created by \code{\link{loadSpikes}}.
-#' @param period The period in seconds by which to summarize.
+#' @param period The period in milliseconds by which to summarize.
 #'
 #' @return A list object with spikes per period as specified by \code{per}.
 #' @export
@@ -16,18 +16,19 @@
 #' # Get spikes per 10 seconds
 #' dt <- spikesper(dt, 10)
 spikesper <- function(x, period) {
-  period <- period * 30000
-  k <- copy(g)
+  period <- period * 30
+  k <- copy(x)
+  if ("triggered" %in% attr(k, "class")) {b <- c("cluster", "ntrig", "time")} else {b <- c("cluster", "time")}
   k[["spiketimes"]][, time := round(time / period) * period]
   k[["spiketimes"]] <- k[["spiketimes"]][,
                     n := .N,
-                    by = c("cluster", "time")
+                    by = b
                     ][,
                       lapply(.SD, head, 1),
                       by = c("cluster", "time"),
                     ]
   a <- attr(k, "class")
   attr(k, "class") <- append(a[a != "ogspiketimes"], "summarized")
-  attr(k, "period") <- period / 30000
+  attr(k, "period") <- period / 30
   return(k)
 }

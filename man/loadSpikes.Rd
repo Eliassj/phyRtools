@@ -4,7 +4,7 @@
 \alias{loadSpikes}
 \title{Load spikes from Phy output}
 \usage{
-loadSpikes(path, triggerfile)
+loadSpikes(path, triggerfile = NA)
 }
 \arguments{
 \item{path}{Path to phy output}

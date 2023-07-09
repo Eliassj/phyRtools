@@ -1,1 +1,12 @@
-plothz <- function(x){}
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+plothz <- function(x)
+{
+
+}
