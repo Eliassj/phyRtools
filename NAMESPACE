@@ -2,7 +2,9 @@
 
 export(loadSpikes)
 export(plothz)
+export(plotraster)
 export(spikeISI)
 export(spikesper)
 export(triggers)
 import(data.table)
+import(ggplot2)

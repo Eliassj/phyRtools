@@ -6,7 +6,7 @@
 #' @param path Path to phy output
 #' @param triggerfile Name of triggerchannel, has to be in the 'path' dir and in .csv form.
 #'
-#' @return A list containing:
+#' @return An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
 #' * "spiketimes", a dt with spiketimes, their cluster, channel and depth.
 #' * "triggers", a vector of triggertimes
 #' * "info", a dt with info from phy on each cluster
