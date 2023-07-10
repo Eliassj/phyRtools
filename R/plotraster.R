@@ -1,13 +1,12 @@
-#' Title
+#' Plot rasterplot
 #'
-#' @param x
-#' @param clstr
+#' @param x An object with the attribute \code{triggered}
+#' @param clstr Cluster id to plot
 #'
-#' @return
+#' @return A rasterplot of spikes in relation to triggers
 #' @import ggplot2
 #' @export
 #'
-#' @examples
 plotraster <- function(x, clstr, timeconv = 30, CS = 0, US = 300)
 {
   if (!"triggered" %in% attr(x, "class")) {stop("Please use an object returned by triggers() for plotting rasterplots")}
