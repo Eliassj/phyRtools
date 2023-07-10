@@ -12,19 +12,19 @@
 #'
 #' @return A dt with 2 columns. V1 = time, V2 = signal. If \code{vectoronly = TRUE} returns only the signal (defaults to \code{FALSE}).
 #'
-extend0 <- function(v, by = 1, bounds = NA, center = TRUE, vectoronly = FALSE)
+extend0 <- function(v, by = 1, bounds = NA, center = TRUE, vectoronly = FALSE, neg = FALSE)
 {
-  if (!is.na(bounds)){
+  if (all(!is.na(bounds))){
     if (length(bounds) > 2) {stop("Bounds should be an integer vector of max length 2")}
     if (!all(bounds == floor(bounds))) {stop("Only integer values allowed as bounds")}
   }
   if (!all(v == floor(v))) {stop("Vector should consist only of integers")}
 
-  if (is.na(bounds)) {
+  if (all(is.na(bounds))) {
     min <- v[1]
     max <- v[length(v)]
   }
-  if (length(bounds) == 1 & !is.na(bounds)) {
+  if (length(bounds) == 1 & all(!is.na(bounds))) {
     min <- bounds
     max <- v[length(v)]
   }
@@ -35,6 +35,7 @@ extend0 <- function(v, by = 1, bounds = NA, center = TRUE, vectoronly = FALSE)
 
   d <- data.table(seq(min, max, by = by),
                   as.integer(0))
+  if (neg == TRUE){d$V2 <- -1}
   d[V1 %in% v, V2 := 1]
   if (center == TRUE) {
     d[,V2 := V2 - mean(V2)]
