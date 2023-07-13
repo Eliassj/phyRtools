@@ -27,6 +27,9 @@ spikesper <- function(x, period) {
                       lapply(.SD, head, 1),
                       by = c("cluster", "time"),
                     ]
+  miss <- data.table(cluster = rep(unique(k$spiketimes$cluster), (getmaxtime(k) / period) + 1))
+  setorder(miss, cluster)
+  miss[, time := seq(0, getmaxtime(k), 15000), by = cluster]
   a <- attr(k, "class")
   attr(k, "class") <- append(a[a != "ogspiketimes"], "summarized")
   attr(k, "period") <- period / 30

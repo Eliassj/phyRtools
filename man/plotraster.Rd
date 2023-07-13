@@ -2,13 +2,18 @@
 % Please edit documentation in R/plotraster.R
 \name{plotraster}
 \alias{plotraster}
-\title{Title}
+\title{Plot rasterplot}
 \usage{
-plotraster(x, clstr)
+plotraster(x, clstr, timeconv = 30, CS = 0, US = 300)
 }
 \arguments{
-\item{clstr}{}
+\item{x}{An object with the attribute \code{triggered} (see \link{triggers()})}
+
+\item{clstr}{Cluster id to plot}
+}
+\value{
+A rasterplot of spikes in relation to triggers
 }
 \description{
-Title
+Plot rasterplot
 }

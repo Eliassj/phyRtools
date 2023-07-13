@@ -1,6 +1,6 @@
 #' Plot rasterplot
 #'
-#' @param x An object with the attribute \code{triggered}
+#' @param x An object with the attribute \code{triggered} (see \link{triggers()})
 #' @param clstr Cluster id to plot
 #'
 #' @return A rasterplot of spikes in relation to triggers

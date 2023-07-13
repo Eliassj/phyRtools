@@ -5,6 +5,12 @@ rastertheme <- theme_classic()+
     axis.title.y = element_text(hjust = 0.3, vjust = -7)
   )
 
+ffttheme <- theme_classic()+
+  theme(
+    panel.grid.major.x = element_line(),
+    panel.grid.minor.x = element_line(linetype = 2)
+  )
+
 standardcol <- "#E65D2FFF"
 
 #  [1] "#000004FF" "#010107FF" "#02020CFF" "#040311FF" "#050418FF" "#08051DFF" "#0A0723FF" "#0D0829FF"

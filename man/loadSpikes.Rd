@@ -12,7 +12,7 @@ loadSpikes(path, triggerfile = NA)
 \item{triggerfile}{Name of triggerchannel, has to be in the 'path' dir and in .csv form.}
 }
 \value{
-A list containing:
+An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
 \itemize{
 \item "spiketimes", a dt with spiketimes, their cluster, channel and depth.
 \item "triggers", a vector of triggertimes

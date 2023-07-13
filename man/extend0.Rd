@@ -4,7 +4,7 @@
 \alias{extend0}
 \title{Turn spiketimes into a signal.}
 \usage{
-extend0(v, by = 1, bounds = NA, center = TRUE, vectoronly = FALSE)
+extend0(v, by = 1, bounds = NA, center = TRUE, vectoronly = FALSE, neg = FALSE)
 }
 \arguments{
 \item{v}{A vector of spiketimes.}
