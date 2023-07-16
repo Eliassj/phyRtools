@@ -12,6 +12,11 @@
 #' * "info", a dt with info from phy on each cluster
 #'
 #' All spike-/trigger times are represented in their original 30 000Hz form.
+#' Associated attributes of importance:
+#' * \code{class} -> ogspiketimes - denotes original spiketimes without summarizing into bins or similar
+#' * \code{clusters}: A chr vector of all clusters in contained
+#' * \code{tfactorms}: The factor by which to divide the time column to convert it to ms.
+#'
 #' @import data.table
 #'
 #' @export
@@ -38,15 +43,18 @@ loadSpikes <- function(path, triggerfile = NA) {
     triggers <- data.table("t" = triggertimes,
                            "n" = 1:length(triggertimes))
     value <- list(
-      spiketimes = spikesdt,
-      triggers = triggers,
-      info = clusterinfo
+      "spiketimes" = spikesdt,
+      "triggers" = triggers,
+      "info" = clusterinfo
     )
     attr(value, "class") <- c("phyoutput", "ogspiketimes", "triggers")
+    attr(value, "clusters") <- unique(value[["spiketimes"]]$cluster)
+    attr(value, "tfactorms") <- 30
   } else {
     value <- list(
-      spiketimes = spikesdt,
-      info = clusterinfo
+      "spiketimes" = spikesdt,
+      "info" = clusterinfo,
+
     )
     attr(value, "class") <- c("phyoutput", "ogspiketimes")
   }

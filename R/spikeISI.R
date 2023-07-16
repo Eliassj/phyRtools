@@ -12,13 +12,17 @@
 #' dt <- loadSpikes(path, triggerfile)
 #' spikeISI(dt)
 spikeISI <- function(x, ISIonly = FALSE) {
-  if (! "ogspiketimes" %in% attr(x, "class")) {
+  if (!"ogspiketimes" %in% attr(x, "class")) {
     stop("spikeISI() should only be used on phy output with original spiketimes!")
   }
   if (ISIonly == FALSE) {
     x[["spiketimes"]][, ISI := time - data.table::shift(time, 1), by = cluster]
     print(x[["spiketimes"]])
+    x[["info"]][, ISIlambda := x[["spiketimes"]][!is.na(ISI), lambda(ISI), by = cluster][, V1]]
   } else {
    x[["spiketimes"]][, .(ISI = time - data.table::shift(time, 1)), by = cluster][!is.na(ISI)]
   }
+  a <- attr(x, "class")
+  attr(x, "class") <- c(a, "ISI")
+  return(x)
 }

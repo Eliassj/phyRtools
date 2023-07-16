@@ -20,6 +20,12 @@ An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
 }
 
 All spike-/trigger times are represented in their original 30 000Hz form.
+Associated attributes of importance:
+\itemize{
+\item \code{class} -> ogspiketimes - denotes original spiketimes without summarizing into bins or similar
+\item \code{clusters}: A chr vector of all clusters in contained
+\item \code{tfactorms}: The factor by which to divide the time column to convert it to ms.
+}
 }
 \description{
 loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr

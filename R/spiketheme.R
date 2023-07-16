@@ -11,7 +11,27 @@ ffttheme <- theme_classic()+
     panel.grid.minor.x = element_line(linetype = 2)
   )
 
+corrgramtheme <- theme_classic()+
+  theme(
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.line.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank()
+  )
+
+hztheme <- theme_classic()+
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top"
+  )
+
 standardcol <- "#E65D2FFF"
+
+standarddisc <- viridis::scale_color_viridis(discrete = TRUE, option = "B", begin = .25, end = .75)
 
 #  [1] "#000004FF" "#010107FF" "#02020CFF" "#040311FF" "#050418FF" "#08051DFF" "#0A0723FF" "#0D0829FF"
 #[9] "#110A2FFF" "#140B35FF" "#180C3BFF" "#1B0C42FF" "#1F0C48FF" "#230C4DFF" "#280B53FF" "#2C0B58FF"
