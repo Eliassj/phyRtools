@@ -19,7 +19,7 @@
 spikesper <- function(x, period, full = TRUE) {
   period <- period * 30
   k <- copy(x)
-  if ("triggered" %in% attr(k, "class")) {b <- c("cluster", "ntrig", "time")} else {b <- c("cluster", "time")}
+  if ("triggered" %in% attr(k, "class")) {b <- c("cluster", "time")} else {b <- c("cluster", "time")}
   k[["spiketimes"]][, time := round(time / period) * period]
   k[["spiketimes"]] <- k[["spiketimes"]][,
                     n := .N,
@@ -31,14 +31,14 @@ spikesper <- function(x, period, full = TRUE) {
   if (full == TRUE) {
     miss <- data.table(cluster = rep(unique(k$spiketimes$cluster), (getmaxtime(k) / period) + 1))
     setorder(miss, cluster)
-    miss[, time := seq(0, getmaxtime(k), 15000), by = cluster]
+    miss[, time := seq(0, getmaxtime(k), period), by = cluster]
     miss <- miss[k$info[, .(cluster_id, ch, depth)], on = .(cluster == cluster_id)]
     miss[, n := 0]
     for (c in unique(k$spiketimes$cluster)) {
       miss[cluster == c & !time %in% k$spiketimes[cluster==c, time], keep := TRUE]
     }
     miss <- miss[keep == TRUE, 1:5]
-    k$spiketimes <- rbindlist(list(k$spiketimes, miss))
+    k$spiketimes <- rbindlist(list(k$spiketimes, miss), fill = TRUE)
     setorder(k$spiketimes, cluster, time)
   }
   a <- attr(k, "class")

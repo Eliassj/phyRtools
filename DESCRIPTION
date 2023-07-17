@@ -13,7 +13,8 @@ Imports:
     fftw,
     ggplot2,
     gsignal,
-    reticulate
+    reticulate,
+    viridis
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

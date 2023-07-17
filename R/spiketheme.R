@@ -29,6 +29,12 @@ hztheme <- theme_classic()+
     legend.position = "top"
   )
 
+isitheme <- theme_classic()+
+  theme(
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+
 standardcol <- "#E65D2FFF"
 
 standarddisc <- viridis::scale_color_viridis(discrete = TRUE, option = "B", begin = .25, end = .75)

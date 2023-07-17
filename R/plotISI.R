@@ -1,13 +1,20 @@
-plotISI <- function(x, clstrs, plotlambda = FALSE)
+plotISI <- function(x, clstrs, plotlambda = FALSE, maxt = 100)
 {
-  p=ggplot(x$spiketimes[cluster %in% clstrs])+
-    geom_histogram(
+  p=ggplot(x$spiketimes[cluster %in% clstrs & ISI <= maxt * attr(x, "tfactorms")])+
+    geom_density(
       aes(
         x = ISI / attr(x, "tfactorms")
       ),
-      bins = 100
-    )
-  return(p+facet_wrap(~cluster, ncol = 2, scales = "free"))
+      fill = standardcol,
+      alpha = .7,
+      outline.type = "lower"
+    )+
+    labs(
+      title = "ISI",
+      x = "ISI"
+    )+
+    isitheme
+  return(p+facet_wrap(~cluster, ncol = 1))
 }
 
 #ggplot()+
