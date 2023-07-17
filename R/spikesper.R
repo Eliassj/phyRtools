@@ -19,7 +19,10 @@
 spikesper <- function(x, period, full = TRUE) {
   period <- period * 30
   k <- copy(x)
-  if ("triggered" %in% attr(k, "class")) {b <- c("cluster", "time")} else {b <- c("cluster", "time")}
+  if ("triggered" %in% attr(k, "class")) {
+    b <- c("cluster", "time")
+    warning("It is usually better to use rel_response() to get frequencies around triggers.")
+    } else {b <- c("cluster", "time")}
   k[["spiketimes"]][, time := round(time / period) * period]
   k[["spiketimes"]] <- k[["spiketimes"]][,
                     n := .N,
