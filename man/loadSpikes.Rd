@@ -4,12 +4,14 @@
 \alias{loadSpikes}
 \title{Load spikes from Phy output}
 \usage{
-loadSpikes(path, triggerfile = NA)
+loadSpikes(path, triggerfile = NA, minfr = 0)
 }
 \arguments{
 \item{path}{Path to phy output}
 
 \item{triggerfile}{Name of triggerchannel, has to be in the 'path' dir and in .csv form.}
+
+\item{minfr}{The minimum mean firerate to include}
 }
 \value{
 An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
@@ -28,8 +30,8 @@ Associated attributes of importance:
 }
 }
 \description{
-loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr
-Associated info includes depth, channel, triggertimes, amplitude, and mean firerate
+Returns a phyoutput containing every spiketime and associated info marked as "good" in Phy.\cr
+Associated info includes depth, channel, triggertimes (if specified in \code{triggerfile}), amplitude, and mean firerate
 }
 \examples{
 loadSpikes(path = "C:/Users/Elias/Desktop/phyish/Phyr/Våra", triggerfile = "asd.csv")

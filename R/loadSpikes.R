@@ -1,10 +1,11 @@
 #' Load spikes from Phy output
 #'
-#' loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr
-#' Associated info includes depth, channel, triggertimes, amplitude, and mean firerate
+#' Returns a phyoutput containing every spiketime and associated info marked as "good" in Phy.\cr
+#' Associated info includes depth, channel, triggertimes (if specified in \code{triggerfile}), amplitude, and mean firerate
 #'
 #' @param path Path to phy output
 #' @param triggerfile Name of triggerchannel, has to be in the 'path' dir and in .csv form.
+#' @param minfr The minimum mean firerate to include
 #'
 #' @return An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
 #' * "spiketimes", a dt with spiketimes, their cluster, channel and depth.
@@ -23,9 +24,14 @@
 #'
 #' @examples
 #' loadSpikes(path = "C:/Users/Elias/Desktop/phyish/Phyr/Våra", triggerfile = "asd.csv")
-loadSpikes <- function(path, triggerfile = NA) {
+loadSpikes <- function(path, triggerfile = NA, minfr = 0) {
   np <- reticulate::import("numpy")
   clusterinfo <- data.table::fread(paste0(path, "\\cluster_info.tsv"))[group == "good"]
+  if (minfr != 0) {
+    message("Removing following due to firerate <= ", minfr)
+    print(clusterinfo[fr < minfr, c("cluster_id", "fr")])
+    clusterinfo <- clusterinfo[fr >= minfr]
+  }
   spikesdt <- data.table::data.table("cluster" = as.integer(as.vector(np$load(paste0(path, "\\spike_clusters.npy")))),
                                      "time" = np$load(paste0(path, "\\spike_times.npy")))
   spikesdt <- spikesdt[cluster %in% clusterinfo$cluster_id]

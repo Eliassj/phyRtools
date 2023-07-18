@@ -32,5 +32,6 @@ triggers <- function(x, back = 500, forward = 600) {
   attr(dt, "class") <- c("phyoutput", "triggered")
   attr(dt, "maxtrig") <- max(dt$spiketimes$ntrig)
   attr(dt, "min_t") <- back
+  attr(dt, "max_t") <- forward
   return(dt)
 }

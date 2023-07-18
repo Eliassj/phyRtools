@@ -4,7 +4,7 @@
 \alias{plothz}
 \title{Title}
 \usage{
-plothz(x)
+plothz(x, clstrs, t = "full", plotline = TRUE, depthsep = TRUE)
 }
 \arguments{
 \item{x}{}

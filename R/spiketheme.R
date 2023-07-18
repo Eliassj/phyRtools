@@ -35,16 +35,20 @@ isitheme <- theme_classic()+
     axis.ticks.y = element_blank()
   )
 
-relhztheme <- theme_classic()+
-  theme(
-    legend.position = "none"
-  )
+relhztheme <- theme_classic()
 
 standardcol <- "#E65D2FFF"
 
-standarddisc <- viridis::scale_color_viridis(discrete = TRUE, option = "B", begin = .25, end = .75)
+standarddisc <- viridis::scale_color_viridis(discrete = TRUE, option = "E", begin = .25, end = .75, direction = -1)
 
-standardcont <- viridis::scale_fill_viridis(option = "C")
+standardcont <- viridis::scale_fill_viridis(option = "E")
+
+greyscale <- scale_fill_gradient2(
+  low = "#ffffff",
+  high = "#000000",
+  mid = "#757575",
+  midpoint = 1
+)
 #  [1] "#000004FF" "#010107FF" "#02020CFF" "#040311FF" "#050418FF" "#08051DFF" "#0A0723FF" "#0D0829FF"
 #[9] "#110A2FFF" "#140B35FF" "#180C3BFF" "#1B0C42FF" "#1F0C48FF" "#230C4DFF" "#280B53FF" "#2C0B58FF"
 #[17] "#310A5CFF" "#360961FF" "#3A0963FF" "#3E0966FF" "#430A68FF" "#470B6AFF" "#4B0C6BFF" "#500D6CFF"
