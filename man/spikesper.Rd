@@ -4,18 +4,21 @@
 \alias{spikesper}
 \title{Create dt with spikes/period}
 \usage{
-spikesper(x, period)
+spikesper(x, period, full = TRUE)
 }
 \arguments{
 \item{x}{A list object created by \code{\link{loadSpikes}}.}
 
-\item{period}{The period in seconds by which to summarize.}
+\item{period}{The period in milliseconds by which to summarize.}
+
+\item{full}{Should a "full" time series including periods without spikes be returned? Defaults to \code{TRUE}.}
 }
 \value{
-A list object with spikes per period as specified by \code{per}.
+A list object with spikes per period as specified by \code{per}. Includes periods with no spikes by default.
 }
 \description{
-Create dt with spikes/period
+Summarizes the spiketimes to spikes/period.
+Removes the attribute "\code{ogspiketimes}" and adds the specified \code{period} as an attribute.
 }
 \examples{
 # Get spikes per second

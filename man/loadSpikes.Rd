@@ -4,15 +4,17 @@
 \alias{loadSpikes}
 \title{Load spikes from Phy output}
 \usage{
-loadSpikes(path, triggerfile)
+loadSpikes(path, triggerfile = NA, minfr = 0)
 }
 \arguments{
 \item{path}{Path to phy output}
 
 \item{triggerfile}{Name of triggerchannel, has to be in the 'path' dir and in .csv form.}
+
+\item{minfr}{The minimum mean firerate to include}
 }
 \value{
-A list containing:
+An list-object with classes \code{phyoutput} and \code{ogspiketimes} containing:
 \itemize{
 \item "spiketimes", a dt with spiketimes, their cluster, channel and depth.
 \item "triggers", a vector of triggertimes
@@ -20,10 +22,16 @@ A list containing:
 }
 
 All spike-/trigger times are represented in their original 30 000Hz form.
+Associated attributes of importance:
+\itemize{
+\item \code{class} -> ogspiketimes - denotes original spiketimes without summarizing into bins or similar
+\item \code{clusters}: A chr vector of all clusters in contained
+\item \code{tfactorms}: The factor by which to divide the time column to convert it to ms.
+}
 }
 \description{
-loadSpikes returns a list object containing every spiketime and associated info marked as "good" in Phy.\cr
-Associated info includes depth, channel, triggertimes, amplitude, and mean firerate
+Returns a phyoutput containing every spiketime and associated info marked as "good" in Phy.\cr
+Associated info includes depth, channel, triggertimes (if specified in \code{triggerfile}), amplitude, and mean firerate
 }
 \examples{
 loadSpikes(path = "C:/Users/Elias/Desktop/phyish/Phyr/Våra", triggerfile = "asd.csv")
