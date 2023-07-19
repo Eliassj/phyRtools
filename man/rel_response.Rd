@@ -11,7 +11,7 @@ rel_response(x, period = 30, depthdiv = NA)
 
 \item{period}{The period in ms by which to summarize}
 
-\item{depthdiv}{Should the depths be summarized into ranges? depthdiv = NA -> don't summarize(default). depthdiv = 4 -> divide into 4 depth ranges and calculate mean at each bin.}
+\item{depthdiv}{Should the depths be summarized into equally sized ranges? depthdiv = NA -> don't summarize(default). depthdiv = 4 -> divide into 4 depth ranges and calculate mean at each bin.}
 }
 \value{
 A phyoutput object containing:
@@ -23,7 +23,8 @@ A phyoutput object containing:
 }
 }
 \description{
-Responses are summarized by cluster, trigger session and depth.
+Responses are summarized by cluster, trigger session and depth. A baseline is calculated as the number of spikes before CS / time included before CS. Each trigger session is given a separate baseline.
+When a short \code{period} is used a cluster with a low firerate may have bins with higher frequency than true. I.e when a period of 10ms is used, 1 spike in 10 ms translates to 100 spikes/s for that bin. This is usually "fixed" whem averaging across trigger sessions as many bins will be 0.
 }
 \seealso{
 \code{\link[=triggers]{triggers()}} \code{\link[=plotrelhz]{plotrelhz()}}

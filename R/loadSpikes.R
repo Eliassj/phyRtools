@@ -28,7 +28,7 @@ loadSpikes <- function(path, triggerfile = NA, minfr = 0) {
   np <- reticulate::import("numpy")
   clusterinfo <- data.table::fread(paste0(path, "\\cluster_info.tsv"))[group == "good"]
   if (minfr != 0) {
-    message("Removing following due to firerate <= ", minfr)
+    message("Removing following due to firerate < ", minfr)
     print(clusterinfo[fr < minfr, c("cluster_id", "fr")])
     clusterinfo <- clusterinfo[fr >= minfr]
   }

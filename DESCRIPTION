@@ -13,6 +13,7 @@ Imports:
     fftw,
     ggplot2,
     gsignal,
+    ggtext,
     reticulate,
     viridis
 Suggests: 
