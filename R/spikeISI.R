@@ -17,8 +17,8 @@ spikeISI <- function(x, ISIonly = FALSE) {
   }
   if (ISIonly == FALSE) {
     x[["spiketimes"]][, ISI := time - data.table::shift(time, 1), by = cluster]
-    print(x[["spiketimes"]])
     x[["info"]][, ISIlambda := x[["spiketimes"]][!is.na(ISI), lambda(ISI), by = cluster][, V1]]
+    x[["info"]][, medianISI := x[["spiketimes"]][!is.na(ISI), median(ISI), by = cluster][, V1]]
   } else {
    x[["spiketimes"]][, .(ISI = time - data.table::shift(time, 1)), by = cluster][!is.na(ISI)]
   }
