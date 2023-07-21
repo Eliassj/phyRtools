@@ -77,8 +77,8 @@ rel_response <- function(x, period = 30, depthdiv = NA)
     if (length(depthdiv == 1)) {
       divs <- max(k$depthmeans$depth) / depthdiv
       lvls <- divs * 1:depthdiv
-      lvls <- paste0(lvls - divs , " - ", lvls, "µm")
-      attr(k, "lvls") <- rev(lvls)
+      lvls <- paste0(round(lvls - divs) , " - ", round(lvls), "µm")
+      attr(k, "lvls") <- rev(lvls) # FIXA NIVÅERNA!!!!!!!
       k$depthmeans <- k$depthmeans[, depth := ceiling(depth / divs) * divs]
       k$depthmeans <- k$depthmeans[, .(relhz = mean(relhz), hz = mean(hz)), by = .(time, depth)]
       k$depthmeans[, nodelist := rev(k$depthmeans$depth / divs)]
