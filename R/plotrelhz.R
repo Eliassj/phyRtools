@@ -13,7 +13,7 @@
 #' @examples
 #'
 #' @importFrom ggtext element_markdown
-plotrelhz <- function(x, by = c("cluster", "trigger", "depthraster", "depthline"), clstrs = NA, CS = 0, US = 300, abs = FALSE)
+plotrelhz <- function(x, by = c("cluster", "trigger", "depthraster", "depthline"), clstrs = NA, CS = 0, US = 300, abs = FALSE, morelines = FALSE)
 {
   tmin <- -attr(x, "min_t") / attr(x, "tfactorms")
   tmax <- attr(x, "max_t") / attr(x, "tfactorms")
@@ -55,9 +55,9 @@ plotrelhz <- function(x, by = c("cluster", "trigger", "depthraster", "depthline"
       theme(
         legend.position = "none",
         axis.line.y = element_blank(),
+        axis.title.y = element_blank(),
         axis.ticks.y = element_blank(),
         axis.text.y = element_blank(),
-        axis.title.y = element_blank(),
         strip.background = element_blank(),
         strip.text.y.left = element_text(
           angle = 0,
