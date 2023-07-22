@@ -20,7 +20,7 @@
 rel_response <- function(x, period = 30, depthdiv = NA)
 {
   if (!"triggered" %in% class(x)){stop("Should only be used on output from triggers()")}
-  k <- copy(x)
+  k <- copy(t)
   period <- period * attr(k, "tfactorms")
   # Create a baseline fr dt by ntrig and cluster. N = Hz
   clusterbaseline <- k$spiketimes[time < 0, .N, by = c("cluster", "depth", "ntrig")]
@@ -36,7 +36,7 @@ rel_response <- function(x, period = 30, depthdiv = NA)
 
   # Summarise into time periods by cluster, depth & trigger session
   k$spiketimes[, time := floor(time / period) * period]
-  k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")]
+  k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")] #PROBLEM HÄR!
   k$spiketimes[, N := N * attr(k, "tfactorms") * 1000 / period]
 
   # Add "missing" bins
@@ -75,14 +75,14 @@ rel_response <- function(x, period = 30, depthdiv = NA)
 
   if (!all(is.na(depthdiv))) {
     if (length(depthdiv == 1)) {
-      divs <- ceiling(max(k$depthmeans$depth) / depthdiv)
+      divs <- max(k$depthmeans$depth) / depthdiv
       lvls <- divs * 1:depthdiv
-      lvls <- paste0(lvls - divs, " - ", lvls, "µm")
+      lvls <- paste0(round(lvls - divs), " - ", round(lvls), "µm")
       attr(k, "lvls") <- rev(lvls) # FIXA NIVÅERNA!!!!!!!
       k$depthmeans <- k$depthmeans[, depth := ceiling(depth / divs) * divs]
       k$depthmeans <- k$depthmeans[, .(relhz = mean(relhz), hz = mean(hz)), by = .(time, depth)]
-      k$depthmeans[, nodelist := rev(k$depthmeans$depth / divs)]
-      k$depthmeans[, depth := paste0(depth - divs, " - ", depth, "µm")]
+      k$depthmeans[, nodelist := k$depthmeans$depth / divs]
+      k$depthmeans[, depth := paste0(round(depth - divs), " - ", round(depth), "µm")]
       k$depthmeans[, depth := ordered(depth, levels = lvls)]
     }
   } else {
