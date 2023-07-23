@@ -20,7 +20,7 @@
 rel_response <- function(x, period = 30, depthdiv = NA)
 {
   if (!"triggered" %in% class(x)){stop("Should only be used on output from triggers()")}
-  k <- copy(t)
+  k <- copy(x)
   period <- period * attr(k, "tfactorms")
   # Create a baseline fr dt by ntrig and cluster. N = Hz
   clusterbaseline <- k$spiketimes[time < 0, .N, by = c("cluster", "depth", "ntrig")]
