@@ -4,10 +4,14 @@ phakephy <- function(clstrcol, tcol, tfactorms = 30)
     "cluster" = clstrcol,
     "time" = tcol
   )
+  info <- data.table("cluster_id" = unique(clstrcol))
+
+
   value <- list(
-   "spiketimes" = spikesdt
+   "spiketimes" = spikesdt,
+   "info" = info
   )
-  attr(value, "class") <- c("data.table", "data.frame", "phyoutput", "ogspiketimes")
+  attr(value, "class") <- c("phyoutput", "ogspiketimes")
   attr(value, "clusters") <- unique(value[["spiketimes"]]$cluster)
   attr(value, "tfactorms") <- tfactorms
   return(value)

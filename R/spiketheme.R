@@ -32,7 +32,8 @@ hztheme <- theme_classic()+
 isitheme <- theme_classic()+
   theme(
     axis.line.y = element_blank(),
-    axis.ticks.y = element_blank()
+    axis.ticks.y = element_blank(),
+    strip.background = element_blank()
   )
 
 relhztheme <- theme_classic()

@@ -6,14 +6,16 @@
 \usage{
 plotrelhz(
   x,
-  clstrs = NA,
   by = c("cluster", "trigger", "depthraster", "depthline"),
+  clstrs = NA,
   CS = 0,
   US = 300,
   abs = FALSE
 )
 }
 \arguments{
+\item{x}{An object returned by \link{\code{rel_response}}}
+
 \item{abs}{}
 }
 \description{

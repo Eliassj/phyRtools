@@ -17,7 +17,7 @@ plotcorrgram <- function(x, clstr, bins = 100, windw = 50, refperiod = 1)
     scale_y_continuous(expand = c(0,0))+
     labs(
       title = paste0("Cluster ", clstr),
-      caption = paste0("Window: +/-", windw, "ms\nRefreactory period: ", refperiod, "ms")
+      caption = paste0("Window: +/-", windw, "ms\nRefractory period: ", refperiod, "ms")
     )+
     corrgramtheme
 }
