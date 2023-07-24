@@ -1,6 +1,6 @@
 #' Calculate relative responses to triggers
 #'
-#' Responses are summarized by cluster, trigger session and depth. A baseline is calculated as the number of spikes before CS / time included before CS. Each trigger session is given a separate baseline by cluster and depth.
+#' Responses are summarized by cluster, trigger session and depth. A baseline is calculated as the number of spikes before CS / time included before CS. Each trigger session is given a separate baseline.
 #' When a short \code{period} is used a cluster with a low firerate may have bins with higher frequency than true. I.e when a period of 10ms is used, 1 spike in 10 ms translates to 100 spikes/s for that bin. This is usually "fixed" whem averaging across trigger sessions as many bins will be 0.
 #'
 #'
@@ -44,10 +44,10 @@ rel_response <- function(x, period = 30, depthdiv = NA)
   maxt <- attr(k, "max_t")
   setkey(k$spiketimes, cluster, ntrig)
   k$spiketimes <- k$spiketimes[, .SD[CJ(
-                               unique(cluster),
-                               unique(ntrig),
-                               seq(mint, maxt, by = period)
-                               ), on = .(cluster == V1, ntrig == V2, time == V3)]][is.na(N), N := 0]
+    unique(cluster),
+    unique(ntrig),
+    seq(mint, maxt, by = period)
+  ), on = .(cluster == V1, ntrig == V2, time == V3)]][is.na(N), N := 0]
 
 
   # Add info and baseline
@@ -59,29 +59,29 @@ rel_response <- function(x, period = 30, depthdiv = NA)
   k$spiketimes[, relhzdepth := N / basehzdepth]
   k$clustermeans <- k$spiketimes[, .(relhz = mean(relhzcluster),
                                      hz = mean(N)
-                                     ),
-                                 by = .(
-                                   cluster,
-                                   time,
-                                   depth
-                                 )]
+  ),
+  by = .(
+    cluster,
+    time,
+    depth
+  )]
   k$depthmeans <- k$spiketimes[, .(relhz = mean(relhzdepth),
                                    hz = mean(N)
-                               ),
-                               by = .(
-                                 depth,
-                                 time
-                               )]
+  ),
+  by = .(
+    depth,
+    time
+  )]
 
   if (!all(is.na(depthdiv))) {
     if (length(depthdiv == 1)) {
       divs <- max(k$depthmeans$depth) / depthdiv
       lvls <- divs * 1:depthdiv
-      lvls <- paste0(lvls - divs, " - ", lvls, "µm")
+      lvls <- paste0(round(lvls - divs), " - ", round(lvls), "µm")
       attr(k, "lvls") <- rev(lvls) # FIXA NIVÅERNA!!!!!!!
       k$depthmeans <- k$depthmeans[, depth := ceiling(depth / divs) * divs]
       k$depthmeans <- k$depthmeans[, .(relhz = mean(relhz), hz = mean(hz)), by = .(time, depth)]
-      k$depthmeans[, nodelist := rev(k$depthmeans$depth / divs)]
+      k$depthmeans[, nodelist := k$depthmeans$depth / divs]
       k$depthmeans[, depth := paste0(round(depth - divs), " - ", round(depth), "µm")]
       k$depthmeans[, depth := ordered(depth, levels = lvls)]
     }
