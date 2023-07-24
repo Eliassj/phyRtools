@@ -36,7 +36,7 @@ rel_response <- function(x, period = 30, depthdiv = NA)
 
   # Summarise into time periods by cluster, depth & trigger session
   k$spiketimes[, time := floor(time / period) * period]
-  k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")] #PROBLEM HÄR!
+  k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")]
   k$spiketimes[, N := N * attr(k, "tfactorms") * 1000 / period]
 
   # Add "missing" bins
