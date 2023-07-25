@@ -1,5 +1,7 @@
 #' Compute distribution of ISI
 #'
+#' If \code{extend = TRUE} the resulting dt may be *very* large if a too high \code{max} is used.
+#'
 #' @param x A phyoutput with original spiketimes
 #' @param binsize Binsize in ms
 #' @param relative Should the relative ISI of each cluster be included?
@@ -12,6 +14,8 @@
 #'
 ISIdistr <- function(x, binsize, extend = TRUE, relative = TRUE, minisi = 0, maxisi = 500)
 {
+  if (!"phyoutput" %in% attr(x, "class") | !"ISI" %in% attr(x, "class")) {stop("Should only be used on a phyoutput object from the spikeISI() function.")}
+
   binsize <- binsize * attr(x, "tfactorms")
   isidistr <- x$spiketimes[, floor(ISI / binsize) * binsize, by = cluster]
   isidistr <- isidistr[, .N, by = .(cluster, V1)]

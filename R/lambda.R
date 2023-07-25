@@ -1,3 +1,3 @@
 lambda <- function(x) {
-  length(x) / sum(x)
+  sum(x) / length(x)
 }
