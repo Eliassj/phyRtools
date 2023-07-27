@@ -23,7 +23,10 @@ dtextend <- function(dt,
 {
   if (!col %in% colnames(dt)) {stop("Col not in dt")}
 
-  groups <- dt[, ..group][,unique(.SD)][[1]]
+  if (!all(is.na(group))) {
+    groups <- dt[, ..group][,unique(.SD)][[1]]
+  } else {groups <- "tmp"}
+
 
   if (max == "auto") { # Get max in col, if dt will have more than 1000000 rows, ask for new max
     rm(max)
@@ -53,6 +56,10 @@ dtextend <- function(dt,
 
   colnames(res) <- c(eval(group), eval(col))
 
+  if (all(is.na(group))) {
+    dt[, "tmp" := 1]
+  }
+
   res <- dt[
             res,
             on = c(eval(group), eval(col)),
@@ -63,6 +70,11 @@ dtextend <- function(dt,
   }
 
   setorderv(res, cols = c(eval(group), eval(col)))
+
+  if (all(is.na(group))) {
+    dt[, tmp := NULL]
+  }
+
   return(res)
 }
 

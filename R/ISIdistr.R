@@ -2,7 +2,7 @@
 #'
 #' If \code{extend = TRUE} the resulting dt may be *very* large if a too high \code{max} is used.
 #'
-#' @param x A phyoutput with original spiketimes
+#' @param x A phyoutput with original spiketimes from the \link{\code{spikeISI}} function.
 #' @param binsize Binsize in ms
 #' @param relative Should the relative ISI of each cluster be included?
 #' @param extend Should "missing" bins (ie those representing 0 ISI) be added?
