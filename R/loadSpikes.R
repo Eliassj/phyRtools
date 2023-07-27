@@ -43,10 +43,10 @@ loadSpikes <- function(path, triggerfile = NA, minfr = 0) {
 
     trig_index <- data.table::data.table("triggers" = trigger[, which(V1 != 0)]) # Extract index of triggers
 
-    trig_index[, triggershift := triggers - data.table::shift(triggers, n = 1)] # Make all sequential values 1
+    trig_index[, triggershift := triggers - data.table::shift(triggers, n = 1, fill = 0)] # Make all sequential values 1
 
     triggertimes <- trig_index[triggershift != 1, triggers]# Remove all values not = 1
-    triggers <- data.table("t" = triggertimes,
+    triggers <- data.table("t" = triggertimes - 1, # - 1 since index starts at 1 while time starts at 0?
                            "n" = 1:length(triggertimes))
     value <- list(
       "spiketimes" = spikesdt,

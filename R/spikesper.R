@@ -44,6 +44,7 @@ spikesper <- function(x, period, full = TRUE) {
     k$spiketimes <- rbindlist(list(k$spiketimes, miss), fill = TRUE)
     setorder(k$spiketimes, cluster, time)
   }
+  k$spiketimes[, frq := n / (period / (attr(k, "tfactorms") * 1000))]
   a <- attr(k, "class")
   attr(k, "class") <- append(a[a != "ogspiketimes"], "summarized")
   attr(k, "period") <- period / 30
