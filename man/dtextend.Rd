@@ -2,7 +2,7 @@
 % Please edit documentation in R/dtextend.R
 \name{dtextend}
 \alias{dtextend}
-\title{Title}
+\title{Extend a dt by a (time) column}
 \usage{
 dtextend(dt, col, group, step, fill = 0, min = 0, max = "auto", ask = TRUE)
 }
@@ -11,7 +11,7 @@ dtextend(dt, col, group, step, fill = 0, min = 0, max = "auto", ask = TRUE)
 
 \item{col}{Quoted name of column to expand by}
 
-\item{group}{Quoted name of column to group by}
+\item{group}{Quoted name of column to group by. If no grouping is desired this should be set to \code{NA}.}
 
 \item{step}{Steps by which to pad the column specified in \code{col}}
 
@@ -27,5 +27,6 @@ dtextend(dt, col, group, step, fill = 0, min = 0, max = "auto", ask = TRUE)
 A dt with all combinations if \code{col} & \code{group} with restrictions as described above. All columns in new rows other than \code{col} & \code{group} will be filled with 0 unless specified otherwise.
 }
 \description{
-Title
+Add missing observations. New rows (not in \code{group} & \code{col}) are filled with 0 by default.\cr
+For dt:s without a grouping column this has to be specified by setting \code{group = NA}.
 }

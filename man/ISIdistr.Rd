@@ -7,7 +7,7 @@
 ISIdistr(x, binsize, extend = TRUE, relative = TRUE, minisi = 0, maxisi = 500)
 }
 \arguments{
-\item{x}{A phyoutput with original spiketimes}
+\item{x}{A phyoutput with original spiketimes from the \link{\code{spikeISI}} function.}
 
 \item{binsize}{Binsize in ms}
 
@@ -23,5 +23,5 @@ ISIdistr(x, binsize, extend = TRUE, relative = TRUE, minisi = 0, maxisi = 500)
 A dt with the distribution of ISI by cluster
 }
 \description{
-Compute distribution of ISI
+If \code{extend = TRUE} the resulting dt may be \emph{very} large if a too high \code{max} is used depending on \code{step} and number of clusters.
 }

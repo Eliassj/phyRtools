@@ -2,22 +2,30 @@
 % Please edit documentation in R/plotrelhz.R
 \name{plotrelhz}
 \alias{plotrelhz}
-\title{Title}
+\title{Plot the relative response to CS and US}
 \usage{
 plotrelhz(
   x,
   by = c("cluster", "trigger", "depthraster", "depthline"),
   clstrs = NA,
   CS = 0,
-  US = 300,
-  abs = FALSE
+  US = 300
 )
 }
 \arguments{
-\item{x}{An object returned by \link{\code{rel_response}}}
+\item{x}{An object returned by \link{rel_response}}
 
-\item{abs}{}
+\item{by}{The type of plot to be returned}
+
+\item{clstrs}{What clusters to include (If plotting by cluster instead of depth)}
+
+\item{CS}{Timing of CS}
+
+\item{US}{Timing of US}
+}
+\value{
+A plot depending on \code{by}
 }
 \description{
-Title
+Plot the relative response to CS and US
 }

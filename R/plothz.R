@@ -1,12 +1,16 @@
-#' Title
+#' Plot the binned frequency of a cluster
 #'
-#' @param x
+#' The phyoutput used should be the result from [spikesper]
 #'
-#' @return
+#' @param x A phyoutput from spikesper
+#' @param clstrs Clusters to include in plot
+#' @param t A numeric vector of size 2 containing desired timespan.
+#' @param plotline Should the raw frequency be plotted below the smoothed?
+#'
+#' @return A plot of smoothed frequency.
 #' @export
 #'
-#' @examples
-plothz <- function(x, clstrs, t = "full", plotline = TRUE, depthsep = TRUE)
+plothz <- function(x, clstrs, t = "full", plotline = TRUE)
 {
   if (!"summarized" %in% attr(x, "class")){stop("spikesper() should be used before plotting frequencies")}
   if (all(t == "full")) {

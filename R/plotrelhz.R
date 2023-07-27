@@ -1,19 +1,18 @@
-#' Title
+#' Plot the relative response to CS and US
 #'
-#' @param x An object returned by \link{\code{rel_response}}
-#' @param by
-#' @param clstrs
-#' @param CS
-#' @param US
-#' @param abs
+#' @param x An object returned by [rel_response]
+#' @param by The type of plot to be returned
+#' @param clstrs What clusters to include (If plotting by cluster instead of depth)
+#' @param CS Timing of CS
+#' @param US Timing of US
 #'
-#' @return
+#' @return A plot depending on \code{by}
 #' @export
 #'
 #' @examples
 #'
 #' @importFrom ggtext element_markdown
-plotrelhz <- function(x, by = c("cluster", "trigger", "depthraster", "depthline"), clstrs = NA, CS = 0, US = 300, abs = FALSE)
+plotrelhz <- function(x, by = c("cluster", "trigger", "depthraster", "depthline"), clstrs = NA, CS = 0, US = 300)
 {
   tmin <- -attr(x, "min_t") / attr(x, "tfactorms")
   tmax <- attr(x, "max_t") / attr(x, "tfactorms")

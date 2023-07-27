@@ -1,6 +1,6 @@
 #' Compute distribution of ISI
 #'
-#' If \code{extend = TRUE} the resulting dt may be *very* large if a too high \code{max} is used.
+#' If \code{extend = TRUE} the resulting dt may be *very* large if a too high \code{max} is used depending on \code{step} and number of clusters.
 #'
 #' @param x A phyoutput with original spiketimes from the \link{\code{spikeISI}} function.
 #' @param binsize Binsize in ms

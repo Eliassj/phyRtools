@@ -2,13 +2,22 @@
 % Please edit documentation in R/plothz.R
 \name{plothz}
 \alias{plothz}
-\title{Title}
+\title{Plot the binned frequency of a cluster}
 \usage{
-plothz(x, clstrs, t = "full", plotline = TRUE, depthsep = TRUE)
+plothz(x, clstrs, t = "full", plotline = TRUE)
 }
 \arguments{
-\item{x}{}
+\item{x}{A phyoutput from spikesper}
+
+\item{clstrs}{Clusters to include in plot}
+
+\item{t}{A numeric vector of size 2 containing desired timespan.}
+
+\item{plotline}{Should the raw frequency be plotted below the smoothed?}
+}
+\value{
+A plot of smoothed frequency.
 }
 \description{
-Title
+The phyoutput used should be the result from \link{spikesper}
 }

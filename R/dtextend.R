@@ -1,8 +1,11 @@
-#' Title
+#' Extend a dt by a (time) column
+#'
+#' Add missing observations. New rows (not in \code{group} & \code{col}) are filled with 0 by default.\cr
+#' For dt:s without a grouping column this has to be specified by setting \code{group = NA}.
 #'
 #' @param dt A dt
 #' @param col Quoted name of column to expand by
-#' @param group Quoted name of column to group by
+#' @param group Quoted name of column to group by. If no grouping is desired this should be set to \code{NA}.
 #' @param step Steps by which to pad the column specified in \code{col}
 #' @param fill Value to fill other columns with
 #' @param min The minimum value \code{col} should take
@@ -56,7 +59,7 @@ dtextend <- function(dt,
 
   colnames(res) <- c(eval(group), eval(col))
 
-  if (all(is.na(group))) {
+  if (all(is.na(group))) { # Add temporary grouping column if there is only 1 in data
     dt[, "tmp" := 1]
   }
 
@@ -77,4 +80,3 @@ dtextend <- function(dt,
 
   return(res)
 }
-
