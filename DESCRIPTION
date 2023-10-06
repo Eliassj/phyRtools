@@ -1,8 +1,7 @@
 Package: phyRtools
 Title: A toolset for working with ohy outpu in R
 Version: 0.0.0.9000
-Authors@R: 
-    person("Elias", "Sjölin", , "elias.sjolin@gmail.com", role = "aut")
+Authors@R: person("Elias", "Sjölin", , "elias.sjolin@gmail.com", role = c("aut"))
 Description: What the package does (one paragraph).
 License: `use_gpl3_license()`
 Encoding: UTF-8
