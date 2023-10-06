@@ -1,8 +1,8 @@
 Package: phyRtools
-Title: A toolset for working with ohy outpu in R
+Title: Tools for working with phy output in R
 Version: 0.0.0.9000
-Authors@R: person("Elias", "Sjölin", , "elias.sjolin@gmail.com", role = c("aut"))
-Description: What the package does (one paragraph).
+Authors@R: person("Elias", "Sjölin", "elias.sjolin@gmail.com", role = c("aut"))
+Description: See title
 License: `use_mit_license()`
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
