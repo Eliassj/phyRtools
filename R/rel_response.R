@@ -17,82 +17,87 @@
 #' @export
 #'
 #' @seealso [triggers()] [plotrelhz()]
-rel_response <- function(x, period = 30, depthdiv = NA)
-{
-  if (!"triggered" %in% class(x)){stop("Should only be used on output from triggers()")}
-  k <- copy(x)
-  period <- period * attr(k, "tfactorms")
-  # Create a baseline fr dt by ntrig and cluster. N = Hz
-  clusterbaseline <- k$spiketimes[time < 0, .N, by = c("cluster", "depth", "ntrig")]
-  clusterbaseline[, N := N * ((attr(k, "tfactorms") * 1000) / attr(k, "min_t"))]
-  colnames(clusterbaseline) <- c("clstr", "dpth", "trig", "basehzcluster")
-
-  depthbaseline <- k$spiketimes[time < 0, .N, by = c("depth", "ntrig")]
-  depthbaseline[, N := N * ((attr(k, "tfactorms") * 1000) / attr(k, "min_t"))]
-  colnames(depthbaseline) <- c("dpth", "trig", "basehzdepth")
-
-  baseline <- clusterbaseline[depthbaseline, on = .NATURAL]
-  rm(depthbaseline, clusterbaseline)
-
-  # Summarise into time periods by cluster, depth & trigger session
-  k$spiketimes[, time := floor(time / period) * period]
-  k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")]
-  k$spiketimes[, N := N * attr(k, "tfactorms") * 1000 / period]
-
-  # Add "missing" bins
-  mint <- -attr(k, "min_t")
-  maxt <- attr(k, "max_t")
-  setkey(k$spiketimes, cluster, ntrig)
-  k$spiketimes <- k$spiketimes[, .SD[CJ(
-    unique(cluster),
-    unique(ntrig),
-    seq(mint, maxt, by = period)
-  ), on = .(cluster == V1, ntrig == V2, time == V3)]][is.na(N), N := 0]
-
-
-  # Add info and baseline
-  k$spiketimes <- k$spiketimes[k$info[, .(cluster_id, ch, depth)], on = .(cluster == cluster_id)]
-  k$spiketimes <- k$spiketimes[baseline, on = .(cluster == clstr, ntrig == trig, depth == dpth)]
-  k$spiketimes[, relhzcluster := N / basehzcluster]
-
-  # Calculate relative hz
-  k$spiketimes[, relhzdepth := N / basehzdepth]
-  k$clustermeans <- k$spiketimes[, .(relhz = mean(relhzcluster),
-                                     hz = mean(N)
-  ),
-  by = .(
-    cluster,
-    time,
-    depth
-  )]
-  k$depthmeans <- k$spiketimes[, .(relhz = mean(relhzdepth),
-                                   hz = mean(N)
-  ),
-  by = .(
-    depth,
-    time
-  )]
-
-  if (!all(is.na(depthdiv))) {
-    if (length(depthdiv == 1)) {
-      divs <- max(k$depthmeans$depth) / depthdiv
-      lvls <- divs * 1:depthdiv
-      lvls <- paste0(round(lvls - divs), " - ", round(lvls), "µm")
-      attr(k, "lvls") <- rev(lvls) # FIXA NIVÅERNA!!!!!!!
-      k$depthmeans <- k$depthmeans[, depth := ceiling(depth / divs) * divs]
-      k$depthmeans <- k$depthmeans[, .(relhz = mean(relhz), hz = mean(hz)), by = .(time, depth)]
-      k$depthmeans[, nodelist := k$depthmeans$depth / divs]
-      k$depthmeans[, depth := paste0(round(depth - divs), " - ", round(depth), "µm")]
-      k$depthmeans[, depth := ordered(depth, levels = lvls)]
+rel_response <- function(x, period = 30, depthdiv = NA) {
+    if (!"triggered" %in% class(x)) {
+        stop("Should only be used on output from triggers()")
     }
-  } else {
-    dpths <- unique(k$depthmeans$depth)
-    k$depthmeans[, nodelist := which(dpths == depth), by = depth]
-    attr(k, "lvls") <- rev(dpths)
-  }
+    k <- copy(x)
+    period <- period * attr(k, "tfactorms")
+    # Create a baseline fr dt by ntrig and cluster. N = Hz
+    clusterbaseline <- k$spiketimes[time < 0, .N, by = c("cluster", "depth", "ntrig")]
+    clusterbaseline[, N := N * ((attr(k, "tfactorms") * 1000) / attr(k, "min_t"))]
+    colnames(clusterbaseline) <- c("clstr", "dpth", "trig", "basehzcluster")
 
-  attr(k, "period") <- period
-  a <- attr(k, "class")
-  attr(k, "class") <- append(a[a != "ogspiketimes"], "summarized")
-  return(k)
+    depthbaseline <- k$spiketimes[time < 0, .N, by = c("depth", "ntrig")]
+    depthbaseline[, N := N * ((attr(k, "tfactorms") * 1000) / attr(k, "min_t"))]
+    colnames(depthbaseline) <- c("dpth", "trig", "basehzdepth")
+
+    baseline <- clusterbaseline[depthbaseline, on = .NATURAL]
+    rm(depthbaseline, clusterbaseline)
+
+    # Summarise into time periods by cluster, depth & trigger session
+    k$spiketimes[, time := floor(time / period) * period]
+    k$spiketimes <- k$spiketimes[, .N, by = c("cluster", "ntrig", "time")]
+    k$spiketimes[, N := N * attr(k, "tfactorms") * 1000 / period]
+
+    # Add "missing" bins
+    mint <- min(k$spiketimes$time)
+    maxt <- max(k$spiketimes$time)
+    setkey(k$spiketimes, cluster, ntrig)
+    k$spiketimes <- k$spiketimes[, .SD[CJ(
+        unique(cluster),
+        unique(ntrig),
+        seq(mint, maxt, by = period)
+    ), on = .(cluster == V1, ntrig == V2, time == V3)]][is.na(N), N := 0]
+
+
+    # Add info and baseline
+    k$spiketimes <- k$spiketimes[k$info[, .(cluster_id, ch, depth)], on = .(cluster == cluster_id)]
+    k$spiketimes <- k$spiketimes[baseline, on = .(cluster == clstr, ntrig == trig, depth == dpth)]
+    k$spiketimes[, relhzcluster := N / basehzcluster]
+
+    # Calculate relative hz
+    k$spiketimes[, relhzdepth := N / basehzdepth]
+    k$clustermeans <- k$spiketimes[, .(
+        relhz = mean(relhzcluster),
+        hz = mean(N)
+    ),
+    by = .(
+        cluster,
+        time,
+        depth
+    )
+    ]
+    k$depthmeans <- k$spiketimes[, .(
+        relhz = mean(relhzdepth),
+        hz = mean(N)
+    ),
+    by = .(
+        depth,
+        time
+    )
+    ]
+
+    if (!all(is.na(depthdiv))) {
+        if (length(depthdiv == 1)) {
+            divs <- max(k$depthmeans$depth) / depthdiv
+            lvls <- divs * 1:depthdiv
+            lvls <- paste0(round(lvls - divs), " - ", round(lvls), "µm")
+            attr(k, "lvls") <- rev(lvls) # FIXA NIVÅERNA!!!!!!!
+            k$depthmeans <- k$depthmeans[, depth := ceiling(depth / divs) * divs]
+            k$depthmeans <- k$depthmeans[, .(relhz = mean(relhz), hz = mean(hz)), by = .(time, depth)]
+            k$depthmeans[, nodelist := k$depthmeans$depth / divs]
+            k$depthmeans[, depth := paste0(round(depth - divs), " - ", round(depth), "µm")]
+            k$depthmeans[, depth := ordered(depth, levels = lvls)]
+        }
+    } else {
+        dpths <- unique(k$depthmeans$depth)
+        k$depthmeans[, nodelist := which(dpths == depth), by = depth]
+        attr(k, "lvls") <- rev(dpths)
+    }
+
+    attr(k, "period") <- period
+    a <- attr(k, "class")
+    attr(k, "class") <- append(a[a != "ogspiketimes"], "summarized")
+    return(k)
 }

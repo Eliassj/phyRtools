@@ -1,0 +1,33 @@
+triggers               package:phyRtools               R Documentation
+
+_M_a_r_k _s_p_i_k_e_s _b_y _t_h_e_i_r _n_e_a_r_e_s_t _t_r_i_g_g_e_r
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     A function which creates a new ‘phyoutput’ object only containing
+     spikes near a trigger (as specified by ‘back’ & ‘forward’).
+
+_U_s_a_g_e:
+
+     triggers(x, back = 500, forward = 600)
+     
+_A_r_g_u_m_e_n_t_s:
+
+       x: A list object as created by ‘loadSpikes’
+
+    back: The time in ms to look backwards from trigger. Defaults to
+          500.
+
+ forward: The time in ms to look forwards from trigger. Defaults to
+          600.
+
+_V_a_l_u_e:
+
+     A new phyouput object containing info and spikes near triggers.
+
+_E_x_a_m_p_l_e_s:
+
+     dt <- loadSpikes(path, triggerfile)
+     newdt <- triggers(dt)
+     
+
