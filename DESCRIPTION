@@ -1,7 +1,7 @@
 Package: phyRtools
 Title: Tools for working with phy output in R
 Version: 0.0.0.9000
-Authors@R: person("Elias", "Sjölin", "elias.sjolin@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0008-7893-6964"))
+Authors@R: person(given = "Elias", family = "Sjölin", "elias.sjolin@gmail.com", role = "cre", comment = c(ORCID = "0009-0008-7893-6964"))
 Description: See title
 License: `use_mit_license()`
 Encoding: UTF-8
